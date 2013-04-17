@@ -1,0 +1,9 @@
+Keys:
+
+wunderground_key
+gmail_username
+gmail_password
+gmail_to_email
+
+to use:
+ruby digest.rb
