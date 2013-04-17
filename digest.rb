@@ -1,7 +1,11 @@
 require 'open-uri'
 require 'json'
+require 'yaml'
 
-WUNDERGROUND_KEY = ""
+yaml = YAML::load_file(File.join(File.dirname(File.expand_path(__FILE__)), "credentials.yml"))
+WUNDERGROUND_KEY = yaml["wunderground_key"]
+GMAIL_USERNAME = yaml["gmail_username"]
+GMAIL_PASSWORD = yaml["gmail_password"]
 
 def get_now_and_later_for(city)
   res = open("http://api.wunderground.com/api/#{WUNDERGROUND_KEY}/conditions/forecast/q/CA/#{city}.json", 'UserAgent' => 'Ruby-open-uri', 'Accept-Encoding' => 'gzip')
