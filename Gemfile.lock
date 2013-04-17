@@ -1,0 +1,14 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    json (1.7.7)
+    jsonpath (0.5.2)
+      multi_json
+    multi_json (1.7.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  json
+  jsonpath
