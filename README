@@ -1,5 +1,4 @@
-Keys:
-
+keys:
 wunderground_key
 gmail_username
 gmail_password
@@ -7,3 +6,6 @@ gmail_to_email
 
 to use:
 ruby digest.rb
+
+cronjob example:
+45 12 * * * /home/mheld/.rvm/rubies/ruby-2.0.0-p0/bin/ruby /home/mheld/daily-digest/digest.rb
