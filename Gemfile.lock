@@ -1,19 +1,42 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    activesupport (3.1.12)
+      multi_json (~> 1.0)
+    builder (3.2.0)
+    curb (0.7.18)
+    feedzirra (0.1.3)
+      activesupport (~> 3.1.1)
+      builder (>= 2.1.2)
+      curb (~> 0.7.15)
+      i18n (>= 0.5.0)
+      loofah (~> 1.2.0)
+      nokogiri (>= 1.4.4)
+      rake (>= 0.8.7)
+      rdoc (~> 3.8)
+      sax-machine (~> 0.1.0)
     i18n (0.6.4)
     json (1.7.7)
+    loofah (1.2.1)
+      nokogiri (>= 1.4.4)
     mail (2.5.3)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime (0.1)
     mime-types (1.22)
+    multi_json (1.7.2)
+    nokogiri (1.5.9)
     polyglot (0.3.3)
+    rake (10.0.4)
+    rdoc (3.12.2)
+      json (~> 1.4)
     ruby-gmail (0.3.0)
       mail (>= 2.2.1)
       mime (>= 0.1)
       shared-mime-info
+    sax-machine (0.1.0)
+      nokogiri (> 0.0.0)
     shared-mime-info (0.1)
     treetop (1.4.12)
       polyglot
@@ -23,5 +46,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  feedzirra
   json
   ruby-gmail
