@@ -13,8 +13,14 @@ GMAIL_TO_EMAIL = yaml["gmail_to_email"]
 
 @time = Time.now.strftime("%a %b %d")
 
-def get_now_and_later_for(city)
-  res = open("http://api.wunderground.com/api/#{WUNDERGROUND_KEY}/conditions/forecast/q/CA/#{city}.json", 'UserAgent' => 'Ruby-open-uri', 'Accept-Encoding' => 'gzip')
+# make sure that hash is String -> String, String -> Number does weird stuff (01604 turns into 900 due to ruby parsing)
+def get_now_and_later_for(hash)
+  if hash[:zip]
+    query = "http://api.wunderground.com/api/#{WUNDERGROUND_KEY}/geolookup/conditions/forecast/q/#{hash[:zip]}.json"
+  else
+    query = "http://api.wunderground.com/api/#{WUNDERGROUND_KEY}/conditions/forecast/q/#{hash[:state]}/#{hash[:city]}.json"
+  end
+  res = open(query, 'UserAgent' => 'Ruby-open-uri', 'Accept-Encoding' => 'gzip')
   unless res.content_encoding == ['gzip'] then
     str = res.read
   else
@@ -43,10 +49,16 @@ NEW_LINE = "<br /> \n \n"
 def generate_email
   "<h1>Daily Digest for #{@time}</h1> <br /> " + NEW_LINE +
   "<h1>Weather</h1>" + NEW_LINE +
-  get_now_and_later_for("San_Francisco") + NEW_LINE +
-  get_now_and_later_for("Palo_Alto") + NEW_LINE +
+  #get_now_and_later_for("San_Francisco") + NEW_LINE +
+  get_now_and_later_for(zip: "01604") + NEW_LINE +
+  get_now_and_later_for(zip: "10017") + NEW_LINE +
+  get_now_and_later_for(zip: "07410") + NEW_LINE +
+  #get_now_and_later_for("Palo_Alto") + NEW_LINE +
   "<h1>News</h1>" + NEW_LINE +
-  get_rss_for("American Shipper", ["http://americanshipper.com/Rss.aspx?sn=News1", "http://americanshipper.com/Rss.aspx?sn=ASDaily", "http://americanshipper.com/Rss.aspx?sn=AmericanShipperMagazineLogistics", "http://americanshipper.com/Rss.aspx?sn=AmericanShipperMagazine"])
+  #get_rss_for("American Shipper", ["http://americanshipper.com/Rss.aspx?sn=News1", "http://americanshipper.com/Rss.aspx?sn=ASDaily", "http://americanshipper.com/Rss.aspx?sn=AmericanShipperMagazineLogistics", "http://americanshipper.com/Rss.aspx?sn=AmericanShipperMagazine"])
+  get_rss_for("Tech", ["http://feeds.feedburner.com/TechCrunch"]) + NEW_LINE +
+  get_rss_for("Entrepreneurship", ["http://feeds.feedblitz.com/SethsBlog", "http://feeds.feedburner.com/BothSidesOfTheTable" ]) + NEW_LINE +
+  get_rss_for("Jewelery", ["http://www.nationaljeweler.com/NJ/rss"])
 end
 
 def send_email
@@ -83,6 +95,7 @@ def get_rss_for(category, feeds)
   end.map{|entry| entry_to_html(entry) }.inject(""){|acc, entry| acc << entry}
 end
 
+#p generate_email
 send_email
 
 
