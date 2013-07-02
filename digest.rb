@@ -78,8 +78,8 @@ end
 
 def entry_to_html(entry)
   "<div><a href=\"#{entry.url}\"><h3>#{entry.title}</h3></a> " +
-  if !entry.content.nil? and entry.content.length > 0
-    entry.content
+  if !entry.summary.nil? and entry.summary.length > 0
+    entry.summary
   else
     "\n"
   end + "</div>"
